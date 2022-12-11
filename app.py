@@ -1,17 +1,22 @@
 from datetime import datetime
+import os
+from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+
 app = Flask(__name__)
 
 
 @app.route('/')
 def index():
-   print('Request for index page received')
-   return render_template('index.html')
+    print('Request for index page received')
+    return render_template('index.html')
+
 
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 @app.route('/hello', methods=['POST'])
 def hello():
@@ -20,11 +25,10 @@ def hello():
         f.save(secure_filename(f.filename))
         print(f.filename)
 
-        return  f.filename
+        return f.filename
     else:
         return "Hello World"
-   
 
 
 if __name__ == '__main__':
-   app.run()
+    app.run()

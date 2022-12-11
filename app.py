@@ -38,7 +38,7 @@ def get_translation(input_file):
         'X-ClientTraceId': str(uuid.uuid4())
                 }
     with open(input_file) as f:
-        lines=f.readlines()
+        lines=f.read()
     outname = "TranslatedScripts/" + str(input_file[:-7]) + "ar.vtt"
     List_path = outname.split("/")
     path = '/'.join(List_path[:-1])
@@ -52,21 +52,23 @@ def get_translation(input_file):
         out.write("WEBVTT\n")
     else:
         out.write("")
-    for l in range(1,len(lines)):
-            out = open(outname, "a+",encoding="utf-8")
-            body=[{
-                'text':lines[l]
-            }]
-            request = requests.post(constructed_url, params=params, headers=headers, json=body)
+    out = open(outname, "a+", encoding="utf-8")
+    body = [{
+        'text': lines
+    }]
+    request = requests.post(constructed_url, params=params, headers=headers, json=body)
 
-            response = request.json()
-            #print(json.dumps(response, sort_keys=True, ensure_ascii=False, indent=4, separators=(',', ': ')))
-            json_object = json.loads(json.dumps(response, sort_keys=True, ensure_ascii=False, indent=4, separators=(',', ': ')))
-            print(json_object[0].get("translations")[0]["text"])
-            out.write("".join(json_object[0].get("translations")[0]["text"]))
-            print(json_object[0]['translations'][0]['text'])
-            a.append(str(json_object[0].get("translations")[0]["text"]))
+    response = request.json()
+    # print(json.dumps(response, sort_keys=True, ensure_ascii=False, indent=4, separators=(',', ': ')))
+    json_object = json.loads(json.dumps(response, sort_keys=True, ensure_ascii=False, indent=4, separators=(',', ': ')))
+    print(json_object[0].get("translations")[0]["text"])
+    out.write("".join(json_object[0].get("translations")[0]["text"]))
+    print(json_object[0]['translations'][0]['text'])
+    a.append(str(json_object[0].get("translations")[0]["text"]))
 
+
+
+    print(a)
     upload_fileblob(outname)
 
     return a
@@ -169,8 +171,7 @@ def process_sudio(file_name):
         chunk.export(chunk_name, bitrate="192kHz",format="wav")
     return chunks_name_list
 # Initialize class and upload files
-def test__func():
-    return "Hello We are testing if flask accepting functions"
+
 
 @app.route('/')
 def index():
@@ -189,9 +190,14 @@ def hello():
     if request.method == 'POST':
         f = request.files['file']
         f.save(secure_filename(f.filename))
-        
-        
-        return test_func()
+        print(f.filename)
+        #chunk_name_list = process_sudio(f.filename)
+        #chunk_name_list = f.filename
+        #print(chunk_name_list)
+        text=get_text(f.filename)
+        f = open(text, "r")
+
+        return " ".join(get_translation(text))
     else:
         return "Hello World"
 

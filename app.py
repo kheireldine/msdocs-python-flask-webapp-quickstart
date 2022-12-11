@@ -198,40 +198,8 @@ def hello():
         if not os.path.exists(p):
             os.makedirs(p)
 
-        scriptTextVtt = str(p)+ "/" + str(f.filename[:-4])+ "_eng.vtt"
-        scriptText = str(p) + "/" + str(f.filename[:-4]) + "_eng.txt"
-        with open(scriptTextVtt, 'w') as outfile:
-
-            # Iterate through list
-             count = 0
-             outfile.write("WEBVTT\n")
-             t=0
-             for c in txt_name_list:
-                # Open each file in read mode
-                with open(c) as infile:
-                    outfile.write(str(timedelta(milliseconds=t)))
-                    t = t + 10000
-                    outfile.write("-->")
-                    outfile.write(str(timedelta(milliseconds=t)) + "\n")
-                    outfile.write(infile.read() + "\n")
-
-
-                # Add '\n' to enter data of file2
-                # from next line
-                outfile.write("\n")
-        with open(scriptText, 'w') as englishtext:
-            for c in txt_name_list:
-                # Open each file in read mode
-                with open(c) as infile:
-                    englishtext.write(infile.read() + "\n")
-                # Add '\n' to enter data of file2
-                # from next line
-                englishtext.write("\n")
-
-        # scripttext=SpeechRecognizer.get_text(f.filename)
-        text=get_translation(scriptText)
-        get_translation(scriptTextVtt)
-        return " ".join(text)
+        
+        return " ".join(txt_name_list)
     else:
         return "Hello World"
 

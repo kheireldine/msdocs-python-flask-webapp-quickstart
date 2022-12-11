@@ -1,2 +1,9 @@
-Flask==2.0.2
 werkzeug
+flask_wtf
+flask==2.1.2
+werkzeug==2.1.2
+azure==4.0.0
+numpy
+pydub
+azure-storage-blob
+azure.cognitiveservices.speech

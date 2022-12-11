@@ -169,7 +169,8 @@ def process_sudio(file_name):
         chunk.export(chunk_name, bitrate="192kHz",format="wav")
     return chunks_name_list
 # Initialize class and upload files
-
+def test__func():
+    return "Hello We are testing if flask accepting functions"
 
 @app.route('/')
 def index():
@@ -188,18 +189,9 @@ def hello():
     if request.method == 'POST':
         f = request.files['file']
         f.save(secure_filename(f.filename))
-        chunk_name_list = process_sudio(f.filename)
-        txt_name_list = []
-        for name in chunk_name_list:
-            path = get_text(name)
-            txt_name_list.append(path.replace("./", ""))
-        print(txt_name_list)
-        p="/".join(txt_name_list[0].split("/")[:-1])
-        if not os.path.exists(p):
-            os.makedirs(p)
-
         
-        return " ".join(txt_name_list)
+        
+        return test_func()
     else:
         return "Hello World"
 

@@ -201,7 +201,7 @@ def hello():
         except AssertionError as error:
             print(error)
     else:
-        return "Hello World"
+        return "This is not a post request"
 
 
 if __name__ == '__main__':

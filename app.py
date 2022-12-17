@@ -194,10 +194,12 @@ def hello():
         #chunk_name_list = process_sudio(f.filename)
         #chunk_name_list = f.filename
         #print(chunk_name_list)
-        text=get_text(f.filename)
-        f = open(text, "r")
-
-        return " ".join(get_translation(text))
+        try:
+            text=get_text(f.filename)
+            f = open(text, "r")
+            return " ".join(get_translation(text))
+        except AssertionError as error:
+            print(error)
     else:
         return "Hello World"
 

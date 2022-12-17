@@ -191,15 +191,7 @@ def hello():
         f = request.files['file']
         f.save(secure_filename(f.filename))
         print(f.filename)
-        #chunk_name_list = process_sudio(f.filename)
-        #chunk_name_list = f.filename
-        #print(chunk_name_list)
-        try:
-            text=get_text(f.filename)
-            f = open(text, "r")
-            return " ".join(get_translation(text))
-        except AssertionError as error:
-            print(error)
+        return f.filename
     else:
         return "This is not a post request"
 
